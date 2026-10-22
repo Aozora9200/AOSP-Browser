@@ -63,7 +63,8 @@ public class SearchEngineInfo {
         mName = name;
         Resources res = context.getResources();
 
-        String packageName = R.class.getPackage().getName();
+        // Resources are packaged under the application id, not the R namespace.
+        String packageName = com.android.browser.BuildConfig.APPLICATION_ID;
         int id_data = res.getIdentifier(name, "array", packageName);
         if (id_data == 0) {
             throw new IllegalArgumentException("No resources found for " + name);

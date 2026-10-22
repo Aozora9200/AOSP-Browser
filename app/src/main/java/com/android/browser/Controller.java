@@ -48,9 +48,9 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceActivity;
-import android.provider.Browser;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Images;
+import com.android.browser.platformsupport.Browser;
+import com.android.browser.platformsupport.BrowserContract;
+import com.android.browser.platformsupport.BrowserContract.Images;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Intents.Insert;
 import android.speech.RecognizerIntent;
@@ -656,7 +656,6 @@ public class Controller
         mUi.onPause();
         mNetworkHandler.onPause();
 
-        WebView.disablePlatformNotifications();
         NfcHandler.unregister(mActivity);
         if (sThumbnailBitmap != null) {
             sThumbnailBitmap.recycle();
@@ -706,7 +705,6 @@ public class Controller
 
         mUi.onResume();
         mNetworkHandler.onResume();
-        WebView.enablePlatformNotifications();
         NfcHandler.register(mActivity, this);
         if (mVoiceResult != null) {
             mUi.onVoiceResult(mVoiceResult);
@@ -1025,7 +1023,7 @@ public class Controller
         if (username != null && password != null) {
             handler.proceed(username, password);
         } else {
-            if (tab.inForeground() && !handler.suppressDialog()) {
+            if (tab.inForeground() && true) {
                 mPageDialogsHandler.showHttpAuthentication(tab, handler, host, realm);
             } else {
                 handler.cancel();
@@ -1656,7 +1654,7 @@ public class Controller
                 break;
 
             case R.id.dump_nav_menu_id:
-                getCurrentTopWebView().debugDump();
+                // WebView#debugDump() no longer exists
                 break;
 
             case R.id.zoom_in_menu_id:
@@ -1921,7 +1919,8 @@ public class Controller
                 AddBookmarkPage.class);
         i.putExtra(BrowserContract.Bookmarks.URL, w.getUrl());
         i.putExtra(BrowserContract.Bookmarks.TITLE, w.getTitle());
-        String touchIconUrl = w.getTouchIconUrl();
+        Tab currentTab = getCurrentTab();
+        String touchIconUrl = currentTab != null ? currentTab.getTouchIconUrl() : null;
         if (touchIconUrl != null) {
             i.putExtra(AddBookmarkPage.TOUCH_ICON_URL, touchIconUrl);
             WebSettings settings = w.getSettings();
@@ -1976,7 +1975,7 @@ public class Controller
 
     static Bitmap createScreenshot(WebView view, int width, int height) {
         if (view == null || view.getContentHeight() == 0
-                || view.getContentWidth() == 0) {
+                || view.getWidth() == 0) {
             return null;
         }
         // We render to a bitmap 2x the desired size so that we can then
@@ -1995,7 +1994,7 @@ public class Controller
                     Bitmap.createBitmap(scaledWidth, scaledHeight, Bitmap.Config.RGB_565);
         }
         Canvas canvas = new Canvas(sThumbnailBitmap);
-        int contentWidth = view.getContentWidth();
+        int contentWidth = Math.max(1, Math.round(view.getWidth() / view.getScale()));
         float overviewScale = scaledWidth / (view.getScale() * contentWidth);
         if (view instanceof BrowserWebView) {
             int dy = -((BrowserWebView)view).getTitleHeight();

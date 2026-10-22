@@ -236,7 +236,8 @@ public class Template {
     private static String replaceConsts(Context context, String template) {
         final Pattern pattern = Pattern.compile("<%@\\s*(\\w+/\\w+)\\s*%>");
         final Resources res = context.getResources();
-        final String packageName = R.class.getPackage().getName();
+        // Resources are packaged under the application id, not the R namespace.
+        final String packageName = com.android.browser.BuildConfig.APPLICATION_ID;
         Matcher m = pattern.matcher(template);
         StringBuffer sb = new StringBuffer();
         while (m.find()) {

@@ -35,7 +35,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.android.browser.stub.NullController;
-import com.google.common.annotations.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 public class BrowserActivity extends Activity {
 

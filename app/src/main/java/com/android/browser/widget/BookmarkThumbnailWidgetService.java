@@ -29,8 +29,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
 import android.os.Binder;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Bookmarks;
+import com.android.browser.platformsupport.BrowserContract;
+import com.android.browser.platformsupport.BrowserContract.Bookmarks;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -88,8 +88,14 @@ public class BookmarkThumbnailWidgetService extends RemoteViewsService {
                 Context.MODE_PRIVATE);
     }
 
+    // Context#getSharedPrefsFile() is hidden.
+    private static File getSharedPrefsFile(Context context, String name) {
+        return new File(new File(context.getApplicationInfo().dataDir, "shared_prefs"),
+                name + ".xml");
+    }
+
     static void deleteWidgetState(Context context, int widgetId) {
-        File file = context.getSharedPrefsFile(
+        File file = getSharedPrefsFile(context,
                 String.format("widgetState-%d", widgetId));
         if (file.exists()) {
             if (!file.delete()) {
@@ -121,7 +127,7 @@ public class BookmarkThumbnailWidgetService extends RemoteViewsService {
      *  Checks for any state files that may have not received onDeleted
      */
     static void removeOrphanedStates(Context context, int[] widgetIds) {
-        File prefsDirectory = context.getSharedPrefsFile("null").getParentFile();
+        File prefsDirectory = getSharedPrefsFile(context, "null").getParentFile();
         File[] widgetStates = prefsDirectory.listFiles(new StateFilter(widgetIds));
         if (widgetStates != null) {
             for (File f : widgetStates) {
@@ -247,14 +253,12 @@ public class BookmarkThumbnailWidgetService extends RemoteViewsService {
                     views.setImageViewResource(R.id.thumb, R.drawable.thumb_bookmark_widget_folder_holo);
                 }
                 views.setImageViewResource(R.id.favicon, R.drawable.ic_bookmark_widget_bookmark_holo_dark);
-                views.setDrawableParameters(R.id.thumb, true, 0, -1, null, -1);
             } else {
                 // RemoteViews require a valid bitmap config
                 Options options = new Options();
                 options.inPreferredConfig = Config.ARGB_8888;
                 Bitmap thumbnail = null, favicon = null;
                 byte[] blob = mBookmarks.getBlob(BOOKMARK_INDEX_THUMBNAIL);
-                views.setDrawableParameters(R.id.thumb, true, 255, -1, null, -1);
                 if (blob != null && blob.length > 0) {
                     thumbnail = BitmapFactory.decodeByteArray(
                             blob, 0, blob.length, options);

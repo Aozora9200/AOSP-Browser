@@ -26,7 +26,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.Browser;
+import com.android.browser.platformsupport.Browser;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -46,7 +46,8 @@ public class DefaultSearchEngine implements SearchEngine {
     public static DefaultSearchEngine create(Context context) {
         SearchManager searchManager =
                 (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
-        ComponentName name = searchManager.getWebSearchActivity();
+        // SearchManager#getWebSearchActivity() is hidden; use the bundled engines.
+        ComponentName name = null;
         if (name == null) return null;
         SearchableInfo searchable = searchManager.getSearchableInfo(name);
         if (searchable == null) return null;
@@ -108,7 +109,7 @@ public class DefaultSearchEngine implements SearchEngine {
     public Cursor getSuggestions(Context context, String query) {
         SearchManager searchManager =
                 (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
-        return searchManager.getSuggestions(mSearchable, query);
+        return null;
     }
 
     public boolean supportsSuggestions() {

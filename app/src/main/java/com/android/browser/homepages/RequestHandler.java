@@ -22,8 +22,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.net.Uri;
-import android.provider.BrowserContract.Bookmarks;
-import android.provider.BrowserContract.History;
+import com.android.browser.platformsupport.BrowserContract.Bookmarks;
+import com.android.browser.platformsupport.BrowserContract.History;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -233,7 +233,8 @@ public class RequestHandler extends Thread {
 
     void writeResource(String fileName) throws IOException {
         Resources res = mContext.getResources();
-        String packageName = R.class.getPackage().getName();
+        // Resources are packaged under the application id, not the R namespace.
+        String packageName = com.android.browser.BuildConfig.APPLICATION_ID;
         int id = res.getIdentifier(fileName, null, packageName);
         if (id != 0) {
             InputStream in = res.openRawResource(id);

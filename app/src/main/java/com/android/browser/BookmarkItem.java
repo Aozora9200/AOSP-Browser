@@ -164,9 +164,9 @@ class BookmarkItem extends HorizontalScrollView {
         final ViewGroup.LayoutParams lp = child.getLayoutParams();
 
         final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
-                mPaddingLeft + mPaddingRight, lp.width);
+                getPaddingLeft() + getPaddingRight(), lp.width);
         final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
-                mPaddingTop + mPaddingBottom, lp.height);
+                getPaddingTop() + getPaddingBottom(), lp.height);
 
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
     }
@@ -184,10 +184,10 @@ class BookmarkItem extends HorizontalScrollView {
         final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
         final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
-                mPaddingLeft + mPaddingRight + lp.leftMargin + lp.rightMargin
+                getPaddingLeft() + getPaddingRight() + lp.leftMargin + lp.rightMargin
                         + widthUsed, lp.width);
         final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
-                mPaddingTop + mPaddingBottom + lp.topMargin + lp.bottomMargin
+                getPaddingTop() + getPaddingBottom() + lp.topMargin + lp.bottomMargin
                         + heightUsed, lp.height);
 
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);

@@ -23,8 +23,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
-import libcore.io.Streams;
-import libcore.net.http.ResponseUtils;
+import com.android.browser.platformsupport.IoUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -37,7 +36,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Browser;
+import com.android.browser.platformsupport.Browser;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -175,7 +174,7 @@ public class OpenSearchSearchEngine implements SearchEngine {
             if (urlConnection.getResponseCode() == 200) {
                 final Charset responseCharset;
                 try {
-                    responseCharset = ResponseUtils.responseCharset(urlConnection.getContentType());
+                    responseCharset = IoUtils.responseCharset(urlConnection.getContentType());
                 } catch (UnsupportedCharsetException ucse) {
                     Log.i(TAG, "Unsupported response charset", ucse);
                     return null;
@@ -184,7 +183,7 @@ public class OpenSearchSearchEngine implements SearchEngine {
                     return null;
                 }
 
-                byte[] responseBytes = Streams.readFully(urlConnection.getInputStream());
+                byte[] responseBytes = IoUtils.readFully(urlConnection.getInputStream());
                 return new String(responseBytes, responseCharset);
             } else {
                 Log.i(TAG, "Suggestion request failed");

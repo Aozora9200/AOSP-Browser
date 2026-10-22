@@ -37,7 +37,7 @@ import java.io.PipedOutputStream;
 public class HomeProvider extends ContentProvider {
 
     private static final String TAG = "HomeProvider";
-    public static final String AUTHORITY = "com.android.browser.home";
+    public static final String AUTHORITY = com.android.browser.BuildConfig.APPLICATION_ID + ".home";
     public static final String MOST_VISITED = "content://" + AUTHORITY + "/";
 
     @Override

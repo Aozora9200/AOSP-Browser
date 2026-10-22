@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2026 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Strings that used to come from framework-private resources. -->
+<resources>
+    <string name="ssl_certificate">Security certificate</string>
+    <string name="ssl_certificate_is_valid">This certificate is valid.</string>
+    <string name="issued_to">Issued to:</string>
+    <string name="common_name">Common name:</string>
+    <string name="org_name">Organization:</string>
+    <string name="org_unit">Organizational unit:</string>
+    <string name="issued_by">Issued by:</string>
+    <string name="validity_period">Validity:</string>
+    <string name="issued_on">Issued on:</string>
+    <string name="expires_on">Expires on:</string>
+    <string name="webstorage_notification_channel">Storage</string>
+    <string name="find_on_page">Find on page</string>
+
+    <style name="SslCertificateHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dip</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SslCertificateLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dip</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="SslCertificateValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+</resources>

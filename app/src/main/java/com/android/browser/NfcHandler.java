@@ -52,7 +52,7 @@ public class NfcHandler implements NfcAdapter.CreateNdefMessageCallback {
             handler = new NfcHandler(controller);
         }
 
-        adapter.setNdefPushMessageCallback(handler, activity);
+        // Android Beam (NfcAdapter#setNdefPushMessageCallback) no longer exists.
     }
 
     public static void unregister(Activity activity) {

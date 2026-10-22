@@ -23,8 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.legacy.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -71,6 +71,10 @@ public class ComboViewActivity extends Activity implements CombinedBookmarksCall
         mTabsAdapter = new TabsAdapter(this, mViewPager);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_bookmarks),
                 BrowserBookmarksPage.class, args);
+        // Upstream dropped this tab because of a provider authority clash with
+        // the system browser; our authorities are renamed, so it works again.
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_history),
+                BrowserHistoryPage.class, args);
 
         if (savedInstanceState != null) {
             bar.setSelectedNavigationItem(

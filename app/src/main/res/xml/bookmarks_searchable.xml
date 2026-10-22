@@ -23,7 +23,7 @@
 
     android:includeInGlobalSearch="true"
     android:searchSettingsDescription="@string/search_settings_description"
-    android:searchSuggestAuthority="browser"
+    android:searchSuggestAuthority="@string/legacy_authority"
     android:searchSuggestPath="bookmarks"
     android:searchSuggestSelection="bookmarks.url LIKE ?"
     android:searchSuggestIntentAction="android.intent.action.VIEW"

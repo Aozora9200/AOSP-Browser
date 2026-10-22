@@ -41,8 +41,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
-import libcore.io.Streams;
-import libcore.net.http.ResponseUtils;
+import com.android.browser.platformsupport.IoUtils;
 
 public class GoogleAccountLogin implements Runnable,
         AccountManagerCallback<Bundle>, OnCancelListener {
@@ -141,9 +140,9 @@ public class GoogleAccountLogin implements Runnable,
                 return;
             }
 
-            final Charset responseCharset = ResponseUtils.responseCharset(
+            final Charset responseCharset = IoUtils.responseCharset(
                     connection.getContentType());
-            byte[] responseBytes = Streams.readFully(connection.getInputStream());
+            byte[] responseBytes = IoUtils.readFully(connection.getInputStream());
             authToken = new String(responseBytes, responseCharset);
         } catch (Exception e) {
             Log.d(LOGTAG, "LOGIN_FAIL: Exception acquiring uber token " + e);
@@ -219,6 +218,13 @@ public class GoogleAccountLogin implements Runnable,
     // already logged in.
     public static void startLoginIfNeeded(Activity activity,
             Runnable runnable) {
+        // The ClientLogin/IssueAuthToken endpoints used for pre-login were shut
+        // down and "com.google" tokens are only issued to Google-signed apps.
+        if (true) {
+            runnable.run();
+            return;
+        }
+
         // Already logged in?
         if (isLoggedIn()) {
             runnable.run();

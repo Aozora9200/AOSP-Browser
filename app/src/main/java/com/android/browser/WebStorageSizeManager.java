@@ -406,13 +406,31 @@ public class WebStorageSizeManager {
                     WebsiteSettingsFragment.class.getName());
             PendingIntent contentIntent =
                 PendingIntent.getActivity(mContext, 0, intent, 0);
-            Notification notification = new Notification(icon, title, when);
-            notification.setLatestEventInfo(mContext, title, text, contentIntent);
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
             // Fire away.
             String ns = Context.NOTIFICATION_SERVICE;
             NotificationManager mgr =
                 (NotificationManager) mContext.getSystemService(ns);
+            Notification.Builder builder;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                String channelId = "webstorage";
+                if (mgr != null) {
+                    mgr.createNotificationChannel(new android.app.NotificationChannel(
+                            channelId,
+                            mContext.getString(R.string.webstorage_notification_channel),
+                            NotificationManager.IMPORTANCE_DEFAULT));
+                }
+                builder = new Notification.Builder(mContext, channelId);
+            } else {
+                builder = new Notification.Builder(mContext);
+            }
+            Notification notification = builder
+                    .setSmallIcon(icon)
+                    .setWhen(when)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .build();
             if (mgr != null) {
                 mLastOutOfSpaceNotificationTime = System.currentTimeMillis();
                 mgr.notify(OUT_OF_SPACE_ID, notification);

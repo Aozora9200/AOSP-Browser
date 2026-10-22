@@ -26,7 +26,7 @@ import com.android.browser.WebViewProperties;
 
 public class InvertedContrastPreview extends WebViewPreview {
 
-    static final String IMG_ROOT = "content://com.android.browser.home/res/raw/";
+    static final String IMG_ROOT = "content://" + com.android.browser.homepages.HomeProvider.AUTHORITY + "/res/raw/";
     static final String[] THUMBS = new String[] {
         "thumb_google",
         "thumb_amazon",

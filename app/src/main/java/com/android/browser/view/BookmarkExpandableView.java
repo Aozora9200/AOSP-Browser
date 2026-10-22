@@ -18,7 +18,7 @@ package com.android.browser.view;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.provider.BrowserContract;
+import com.android.browser.platformsupport.BrowserContract;
 import android.util.AttributeSet;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -35,7 +35,6 @@ import android.widget.TextView;
 import com.android.browser.BreadCrumbView;
 import com.android.browser.BrowserBookmarksAdapter;
 import com.android.browser.R;
-import com.android.internal.view.menu.MenuBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,27 +157,8 @@ public class BookmarkExpandableView extends ExpandableListView
 
     @Override
     public void createContextMenu(ContextMenu menu) {
-        // The below is copied from View - we want to bypass the override
-        // in AbsListView
-
-        ContextMenuInfo menuInfo = getContextMenuInfo();
-
-        // Sets the current menu info so all items added to menu will have
-        // my extra info set.
-        ((MenuBuilder)menu).setCurrentMenuInfo(menuInfo);
-
-        onCreateContextMenu(menu);
-        if (mOnCreateContextMenuListener != null) {
-            mOnCreateContextMenuListener.onCreateContextMenu(menu, this, menuInfo);
-        }
-
-        // Clear the extra information so subsequent items that aren't mine don't
-        // have my extra info.
-        ((MenuBuilder)menu).setCurrentMenuInfo(null);
-
-        if (mParent != null) {
-            mParent.createContextMenu(menu);
-        }
+        // View#createContextMenu() picks up our getContextMenuInfo() override.
+        super.createContextMenu(menu);
     }
 
     @Override

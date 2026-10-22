@@ -93,7 +93,7 @@ public class AutologinBar extends LinearLayout implements OnClickListener,
         DeviceAccountLogin login = tab.getDeviceAccountLogin();
         if (login != null) {
             mAutoLoginHandler = login;
-            ContextThemeWrapper wrapper = new ContextThemeWrapper(mContext,
+            ContextThemeWrapper wrapper = new ContextThemeWrapper(getContext(),
                     android.R.style.Theme_Holo_Light);
             mAccountsAdapter = new ArrayAdapter<String>(wrapper,
                     android.R.layout.simple_spinner_item, login.getAccountNames());

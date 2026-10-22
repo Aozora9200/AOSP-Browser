@@ -172,7 +172,7 @@ public class NavigationBarPhone extends NavigationBarBase implements
     void showMenu(View anchor) {
         Activity activity = mUiController.getActivity();
         if (mPopupMenu == null) {
-            mPopupMenu = new PopupMenu(mContext, anchor);
+            mPopupMenu = new PopupMenu(getContext(), anchor);
             mPopupMenu.setOnMenuItemClickListener(this);
             mPopupMenu.setOnDismissListener(this);
             if (!activity.onCreateOptionsMenu(mPopupMenu.getMenu())) {

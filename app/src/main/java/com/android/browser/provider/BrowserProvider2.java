@@ -37,18 +37,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.provider.Browser;
-import android.provider.Browser.BookmarkColumns;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Accounts;
-import android.provider.BrowserContract.Bookmarks;
-import android.provider.BrowserContract.ChromeSyncColumns;
-import android.provider.BrowserContract.Combined;
-import android.provider.BrowserContract.History;
-import android.provider.BrowserContract.Images;
-import android.provider.BrowserContract.Searches;
-import android.provider.BrowserContract.Settings;
-import android.provider.BrowserContract.SyncState;
+import com.android.browser.platformsupport.Browser;
+import com.android.browser.platformsupport.Browser.BookmarkColumns;
+import com.android.browser.platformsupport.BrowserContract;
+import com.android.browser.platformsupport.BrowserContract.Accounts;
+import com.android.browser.platformsupport.BrowserContract.Bookmarks;
+import com.android.browser.platformsupport.BrowserContract.ChromeSyncColumns;
+import com.android.browser.platformsupport.BrowserContract.Combined;
+import com.android.browser.platformsupport.BrowserContract.History;
+import com.android.browser.platformsupport.BrowserContract.Images;
+import com.android.browser.platformsupport.BrowserContract.Searches;
+import com.android.browser.platformsupport.BrowserContract.Settings;
+import com.android.browser.platformsupport.BrowserContract.SyncState;
 import android.provider.ContactsContract.RawContacts;
 import android.provider.SyncStateContract;
 import android.text.TextUtils;
@@ -56,8 +56,8 @@ import android.text.TextUtils;
 import com.android.browser.R;
 import com.android.browser.UrlUtils;
 import com.android.browser.widget.BookmarkThumbnailWidgetProvider;
-import com.android.common.content.SyncStateContentProviderHelper;
-import com.google.common.annotations.VisibleForTesting;
+import com.android.browser.platformsupport.SyncStateContentProviderHelper;
+import androidx.annotation.VisibleForTesting;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -73,7 +73,7 @@ public class BrowserProvider2 extends SQLiteContentProvider {
     public static final String PARAM_GROUP_BY = "groupBy";
     public static final String PARAM_ALLOW_EMPTY_ACCOUNTS = "allowEmptyAccounts";
 
-    public static final String LEGACY_AUTHORITY = "browser";
+    public static final String LEGACY_AUTHORITY = com.android.browser.BuildConfig.APPLICATION_ID + ".legacy";
     static final Uri LEGACY_AUTHORITY_URI = new Uri.Builder()
             .authority(LEGACY_AUTHORITY).scheme("content").build();
 

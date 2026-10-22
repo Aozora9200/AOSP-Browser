@@ -157,7 +157,7 @@ public class TitleBar extends RelativeLayout {
     }
 
     void setupTitleBarAnimator(Animator animator) {
-        Resources res = mContext.getResources();
+        Resources res = getContext().getResources();
         int duration = res.getInteger(R.integer.titlebar_animation_duration);
         animator.setInterpolator(new DecelerateInterpolator(
                 ANIM_TITLEBAR_DECELERATE));
@@ -243,7 +243,7 @@ public class TitleBar extends RelativeLayout {
     private int getVisibleTitleHeight() {
         Tab tab = mBaseUi.getActiveTab();
         WebView webview = tab != null ? tab.getWebView() : null;
-        return webview != null ? webview.getVisibleTitleHeight() : 0;
+        return 0;
     }
 
     /**

@@ -50,7 +50,14 @@ public class BrowserWebView extends WebView {
      */
     public BrowserWebView(Context context, AttributeSet attrs, int defStyle,
             Map<String, Object> javascriptInterfaces, boolean privateBrowsing) {
-        super(context, attrs, defStyle, javascriptInterfaces, privateBrowsing);
+        // The hidden constructor taking JS interfaces is gone, and Chromium WebView
+        // throws for privateBrowsing == true, so ignore both.
+        super(context, attrs, defStyle);
+        if (javascriptInterfaces != null) {
+            for (Map.Entry<String, Object> e : javascriptInterfaces.entrySet()) {
+                addJavascriptInterface(e.getValue(), e.getKey());
+            }
+        }
     }
 
     /**

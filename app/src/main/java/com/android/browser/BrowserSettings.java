@@ -27,7 +27,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.provider.Browser;
+import com.android.browser.platformsupport.Browser;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.webkit.CookieManager;
@@ -182,7 +182,7 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
             // the cost of one cached page is ~3M (measured using nytimes.com). For
             // low end devices, we only cache one page. For high end devices, we try
             // to cache more pages, currently choose 5.
-            if (ActivityManager.staticGetMemoryClass() > 16) {
+            if (((ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass() > 16) {
                 mPageCacheCapacity = 5;
             }
             mWebStorageSizeManager = new WebStorageSizeManager(mContext,
@@ -251,7 +251,6 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
         settings.setGeolocationEnabled(enableGeolocation());
         settings.setJavaScriptEnabled(enableJavascript());
         settings.setLightTouchEnabled(enableLightTouch());
-        settings.setNavDump(enableNavDump());
         settings.setDefaultTextEncodingName(getDefaultTextEncoding());
         settings.setDefaultZoom(getDefaultZoom());
         settings.setMinimumFontSize(getMinimumFontSize());
@@ -293,13 +292,10 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
         settings.setAllowContentAccess(false);
 
         // HTML5 API flags
-        settings.setAppCacheEnabled(true);
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);
 
         // HTML5 configuration parametersettings.
-        settings.setAppCacheMaxSize(getWebStorageSizeManager().getAppCacheMaxSize());
-        settings.setAppCachePath(getAppCachePath());
         settings.setDatabasePath(mContext.getDir("databases", 0).getPath());
         settings.setGeolocationDatabasePath(mContext.getDir("geolocation", 0).getPath());
         // origin policy for file access

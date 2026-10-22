@@ -16,7 +16,7 @@
 
 package com.android.browser;
 
-import android.net.WebAddress;
+import com.android.browser.platformsupport.WebAddress;
 import android.os.Debug;
 import android.os.Process;
 import android.os.SystemClock;
@@ -34,18 +34,6 @@ public class Performance {
 
     private static boolean mInTrace;
 
-    // Performance probe
-    private static final int[] SYSTEM_CPU_FORMAT = new int[] {
-            Process.PROC_SPACE_TERM | Process.PROC_COMBINE,
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG, // 1: user time
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG, // 2: nice time
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG, // 3: sys time
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG, // 4: idle time
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG, // 5: iowait time
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG, // 6: irq time
-            Process.PROC_SPACE_TERM | Process.PROC_OUT_LONG  // 7: softirq time
-    };
-
     private static long mStart;
     private static long mProcessStart;
     private static long mUserStart;
@@ -61,7 +49,7 @@ public class Performance {
             try {
                 WebAddress uri = new WebAddress(url);
                 host = uri.getHost();
-            } catch (android.net.ParseException ex) {
+            } catch (RuntimeException ex) {
                 host = "browser";
             }
             host = host.replace('.', '_');
@@ -78,11 +66,16 @@ public class Performance {
         }
     }
 
+    // Process.readProcFile() is hidden and /proc/stat is no longer readable by apps.
+    private static boolean readSystemCpu(long[] out) {
+        return false;
+    }
+
     static void onPageStarted() {
         mStart = SystemClock.uptimeMillis();
         mProcessStart = Process.getElapsedCpuTime();
         long[] sysCpu = new long[7];
-        if (Process.readProcFile("/proc/stat", SYSTEM_CPU_FORMAT, null, sysCpu, null)) {
+        if (readSystemCpu(sysCpu)) {
             mUserStart = sysCpu[0] + sysCpu[1];
             mSystemStart = sysCpu[2];
             mIdleStart = sysCpu[3];
@@ -93,7 +86,7 @@ public class Performance {
 
     static void onPageFinished(String url) {
         long[] sysCpu = new long[7];
-        if (Process.readProcFile("/proc/stat", SYSTEM_CPU_FORMAT, null, sysCpu, null)) {
+        if (readSystemCpu(sysCpu)) {
             String uiInfo =
                     "UI thread used " + (SystemClock.currentThreadTimeMillis() - mUiStart) + " ms";
             if (LOGD_ENABLED) {

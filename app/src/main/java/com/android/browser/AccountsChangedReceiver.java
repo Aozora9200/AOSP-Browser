@@ -23,9 +23,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Accounts;
-import android.provider.BrowserContract.Bookmarks;
+import com.android.browser.platformsupport.BrowserContract;
+import com.android.browser.platformsupport.BrowserContract.Accounts;
+import com.android.browser.platformsupport.BrowserContract.Bookmarks;
 import android.text.TextUtils;
 
 public class AccountsChangedReceiver extends BroadcastReceiver {

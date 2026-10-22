@@ -26,7 +26,7 @@
     android:voiceSearchMode="showVoiceSearchButton|launchWebSearch"
     android:inputType="textUri"
     android:imeOptions="actionGo"
-    android:searchSuggestAuthority="browser"
+    android:searchSuggestAuthority="@string/legacy_authority"
     android:searchSuggestSelection="history.url LIKE ?"
     android:searchSuggestIntentAction="android.intent.action.VIEW"
 />

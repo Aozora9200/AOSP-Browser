@@ -185,6 +185,7 @@ class Tab implements PictureListener {
 
     // AsyncTask for downloading touch icons
     DownloadTouchIcon mTouchIconLoader;
+    private String mTouchIconUrl;
 
     private BrowserSettings mSettings;
     private int mCaptureWidth;
@@ -629,8 +630,8 @@ class Tab implements PictureListener {
         @Override
         public void onReceivedLoginRequest(WebView view, String realm,
                 String account, String args) {
-            new DeviceAccountLogin(mWebViewController.getActivity(), view, Tab.this, mWebViewController)
-                    .handleLogin(realm, account, args);
+            // Google auto-login needs Google-private account tokens that are
+            // not available to third-party apps, so let the page handle sign-in.
         }
 
     };
@@ -815,6 +816,7 @@ class Tab implements PictureListener {
         @Override
         public void onReceivedTouchIconUrl(WebView view, String url,
                 boolean precomposed) {
+            mTouchIconUrl = url;
             final ContentResolver cr = mContext.getContentResolver();
             // Let precomposed icons take precedence over non-composed
             // icons.
@@ -881,7 +883,6 @@ class Tab implements PictureListener {
          *            be executed at some point to ensure that the sleeping
          *            WebCore thread is woken up.
          */
-        @Override
         public void onReachedMaxAppCacheSize(long spaceNeeded,
                 long totalUsedQuota, WebStorage.QuotaUpdater quotaUpdater) {
             mSettings.getWebStorageSizeManager()
@@ -1836,14 +1837,18 @@ class Tab implements PictureListener {
         mDisableOverrideUrlLoading = true;
     }
 
+    String getTouchIconUrl() {
+        return mTouchIconUrl;
+    }
+
     protected void capture() {
         if (mMainView == null || mCapture == null) return;
-        if (mMainView.getContentWidth() <= 0 || mMainView.getContentHeight() <= 0) {
+        if (mMainView.getWidth() <= 0 || mMainView.getContentHeight() <= 0) {
             return;
         }
         Canvas c = new Canvas(mCapture);
         final int left = mMainView.getScrollX();
-        final int top = mMainView.getScrollY() + mMainView.getVisibleTitleHeight();
+        final int top = mMainView.getScrollY();
         int state = c.save();
         c.translate(-left, -top);
         float scale = mCaptureWidth / (float) mMainView.getWidth();

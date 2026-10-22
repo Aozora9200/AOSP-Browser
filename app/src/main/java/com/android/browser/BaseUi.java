@@ -52,7 +52,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.browser.Tab.SecurityState;
-import com.android.internal.view.menu.MenuBuilder;
 
 import java.util.List;
 
@@ -756,7 +755,7 @@ public abstract class BaseUi implements UI {
     }
 
     protected Menu getMenu() {
-        MenuBuilder menu = new MenuBuilder(mActivity);
+        Menu menu = new android.widget.PopupMenu(mActivity, mContentView).getMenu();
         mActivity.getMenuInflater().inflate(R.menu.browser, menu);
         return menu;
     }

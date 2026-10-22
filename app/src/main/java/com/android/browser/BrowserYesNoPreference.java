@@ -16,7 +16,7 @@
 
 package com.android.browser;
 
-import com.android.internal.preference.YesNoPreference;
+import com.android.browser.platformsupport.YesNoPreference;
 
 import android.content.Context;
 import android.util.AttributeSet;

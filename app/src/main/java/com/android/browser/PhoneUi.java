@@ -67,7 +67,7 @@ public class PhoneUi extends BaseUi {
         mNavigationBar = (NavigationBarPhone) mTitleBar.getNavigationBar();
         TypedValue heightValue = new TypedValue();
         browser.getTheme().resolveAttribute(
-                com.android.internal.R.attr.actionBarSize, heightValue, true);
+                android.R.attr.actionBarSize, heightValue, true);
         mActionBarHeight = TypedValue.complexToDimensionPixelSize(heightValue.data,
                 browser.getResources().getDisplayMetrics());
     }
@@ -201,6 +201,8 @@ public class PhoneUi extends BaseUi {
             menu.setGroupVisible(R.id.SNAPSHOT_MENU, false);
             menu.setGroupVisible(R.id.NAV_MENU, false);
             menu.setGroupVisible(R.id.COMBO_MENU, true);
+            // Saved pages need WebViewClassic#saveViewState(), which is gone.
+            menu.findItem(R.id.snapshots_menu_id).setVisible(false);
         }
     }
 
@@ -380,7 +382,7 @@ public class PhoneUi extends BaseUi {
         mNavScreen.mScroller.finishScroller();
         ImageView target = tabview.mImage;
         int toLeft = 0;
-        int toTop = (tab.getWebView() != null) ? tab.getWebView().getVisibleTitleHeight() : 0;
+        int toTop = 0;
         int toRight = mContentView.getWidth();
         int width = target.getDrawable().getIntrinsicWidth();
         int height = target.getDrawable().getIntrinsicHeight();

@@ -41,7 +41,6 @@ import com.android.browser.SuggestionsAdapter.SuggestItem;
 import com.android.browser.search.SearchEngine;
 import com.android.browser.search.SearchEngineInfo;
 import com.android.browser.search.SearchEngines;
-import com.android.internal.R;
 
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class UrlInputView extends AutoCompleteTextView
     }
 
     public UrlInputView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.autoCompleteTextViewStyle);
+        this(context, attrs, android.R.attr.autoCompleteTextViewStyle);
     }
 
     public UrlInputView(Context context) {
@@ -219,7 +218,7 @@ public class UrlInputView extends AutoCompleteTextView
     }
 
     void showIME() {
-        mInputManager.focusIn(this);
+        mInputManager.restartInput(this);
         mInputManager.showSoftInput(this, 0);
     }
 
@@ -237,7 +236,7 @@ public class UrlInputView extends AutoCompleteTextView
                         .getSearchEngine();
                 if (searchEngine == null) return;
                 SearchEngineInfo engineInfo = SearchEngines
-                        .getSearchEngineInfo(mContext, searchEngine.getName());
+                        .getSearchEngineInfo(getContext(), searchEngine.getName());
                 if (engineInfo == null) return;
                 url = engineInfo.getSearchUriForQuery(url);
                 // mLister.onAction can take it from here without logging

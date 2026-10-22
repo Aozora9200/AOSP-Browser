@@ -3,32 +3,48 @@ plugins {
 }
 
 android {
-    namespace 'com.aozora.browser'
+    // Java sources keep the original AOSP package name; only the installed
+    // application id differs so it never clashes with a system "com.android.browser".
+    namespace 'com.android.browser'
     compileSdk 35
 
     defaultConfig {
         applicationId "com.aozora.browser"
-        minSdk 16
-        targetSdk 35
+        minSdk 21
+        targetSdk 28
         versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionName "5.1-aosp"
+        resValue "string", "legacy_authority", applicationId + ".legacy"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Signed with the debug key so the release APK is installable as-is.
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ["-Xmaxerrs", "1000"]
 }
 
 dependencies {
-
-implementation files('tools\\guava.jar')
+    implementation libs.core
+    implementation libs.viewpager
+    implementation libs.legacy.support.v13
+    implementation libs.annotation
 }

@@ -17,7 +17,7 @@
 package com.android.browser.preferences;
 
 import android.content.Context;
-import android.preference.SeekBarPreference;
+import com.android.browser.platformsupport.SeekBarPreference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;

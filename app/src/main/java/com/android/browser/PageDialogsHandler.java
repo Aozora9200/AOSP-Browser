@@ -341,9 +341,9 @@ public class PageDialogsHandler {
      */
     private AlertDialog.Builder createSslCertificateDialog(SslCertificate certificate,
             SslError error) {
-        View certificateView = certificate.inflateCertificateView(mContext);
+        View certificateView = com.android.browser.platformsupport.SslCertificateView.inflate(mContext, certificate);
         final LinearLayout placeholder =
-                (LinearLayout)certificateView.findViewById(com.android.internal.R.id.placeholder);
+                (LinearLayout)certificateView.findViewById(R.id.placeholder);
 
         LayoutInflater factory = LayoutInflater.from(mContext);
         int iconId;
@@ -352,7 +352,7 @@ public class PageDialogsHandler {
             iconId = R.drawable.ic_dialog_browser_certificate_secure;
             LinearLayout table = (LinearLayout)factory.inflate(R.layout.ssl_success, placeholder);
             TextView successString = (TextView)table.findViewById(R.id.success);
-            successString.setText(com.android.internal.R.string.ssl_certificate_is_valid);
+            successString.setText(R.string.ssl_certificate_is_valid);
         } else {
             iconId = R.drawable.ic_dialog_browser_certificate_partially_secure;
             if (error.hasError(SslError.SSL_UNTRUSTED)) {
@@ -384,7 +384,7 @@ public class PageDialogsHandler {
         }
 
         return new AlertDialog.Builder(mContext)
-                .setTitle(com.android.internal.R.string.ssl_certificate)
+                .setTitle(R.string.ssl_certificate)
                 .setIcon(iconId)
                 .setView(certificateView);
     }

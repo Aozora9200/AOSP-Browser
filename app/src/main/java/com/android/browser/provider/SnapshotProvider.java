@@ -27,7 +27,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.FileUtils;
-import android.provider.BrowserContract;
+import com.android.browser.platformsupport.BrowserContract;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -51,7 +51,7 @@ public class SnapshotProvider extends ContentProvider {
         public static final String VIEWSTATE_SIZE = "viewstate_size";
     }
 
-    public static final String AUTHORITY = "com.android.browser.snapshots";
+    public static final String AUTHORITY = com.android.browser.BuildConfig.APPLICATION_ID + ".snapshots";
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
     static final String TABLE_SNAPSHOTS = "snapshots";
@@ -125,7 +125,7 @@ public class SnapshotProvider extends ContentProvider {
             // Try to move
             if (!oldPath.renameTo(dbPath)) {
                 // Failed, do a copy
-                FileUtils.copyFile(oldPath, dbPath);
+                com.android.browser.platformsupport.IoUtils.copyFile(oldPath, dbPath);
             }
             // Cleanup
             oldPath.delete();

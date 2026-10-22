@@ -22,7 +22,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 import android.webkit.WebChromeClient.FileChooserParams;
 import android.webkit.ValueCallback;
 import android.widget.Toast;
@@ -37,7 +37,7 @@ public class UploadHandler {
     private final static String VIDEO_MIME_TYPE = "video/*";
     private final static String AUDIO_MIME_TYPE = "audio/*";
 
-    private final static String FILE_PROVIDER_AUTHORITY = "com.android.browser-classic.file";
+    private final static String FILE_PROVIDER_AUTHORITY = BuildConfig.APPLICATION_ID + ".file";
 
     /*
      * The Object used to inform the WebView of the file to upload.
