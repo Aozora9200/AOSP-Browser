@@ -5,7 +5,7 @@
 の最終版 `master` (41c050d, 2015年) を、Android Studio / Gradle でビルドできるように
 移植したものです。
 
-- パッケージ名 (applicationId): `com.aozora.browser`
+- パッケージ名 (applicationId): `com.aozora.aospbrowser`
   (Java のパッケージは元の `com.android.browser` のまま)
 - minSdk 21 / targetSdk 28 / compileSdk 35
 
@@ -27,7 +27,7 @@ Android Studio でこのフォルダを開いて実行するか、コマンド�
   などを `platformsupport` パッケージにコピー・移植しました。`libcore`、`com.android.internal.*`、
   `View` の非公開フィールド (`mScrollX` など)、削除された WebView のメソッドは、公開 API に書き換えています。
 - **プロバイダ authority と権限の名前を変更**: `com.android.browser` から
-  `com.aozora.browser` 系に変えたので、システムのブラウザとは衝突しません。
+  `com.aozora.aospbrowser` 系に変えたので、システムのブラウザとは衝突しません。
   そのおかげで、upstream が無効化していた「履歴」タブも使えるようになりました。
 - **Google アカウント連携は無効化**: 起動時の自動ログイン (ClientLogin / IssueAuthToken) と
   WebView の auto-login バーは、サーバーが既に終了しているうえ、`com.google` アカウントの

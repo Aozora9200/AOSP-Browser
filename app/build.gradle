@@ -9,7 +9,7 @@ android {
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.aozora.browser"
+        applicationId "com.aozora.aospbrowser"
         minSdk 21
         targetSdk 28
         versionCode 1
