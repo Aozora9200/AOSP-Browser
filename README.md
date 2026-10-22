@@ -1,4 +1,5 @@
-# AOSP Browser (Gradle build)
+# AOSP-Browser
+10年前のAndroid に搭載されていたブラウザを復元するプロジェクト
 
 [platform_packages_apps_browser](https://github.com/aosp-mirror/platform_packages_apps_browser)
 の最終版 `master` (41c050d, 2015年) を、Android Studio / Gradle でビルドできるように
