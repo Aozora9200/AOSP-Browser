@@ -14,7 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<com.aozora.browser.NavigationBarTablet
+<com.android.browser.NavigationBarTablet
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:background="@drawable/bg_urlbar">
@@ -122,4 +122,4 @@
         style="@style/HoloButton"
         android:contentDescription="@string/accessibility_button_bookmarks"
         android:src="@drawable/ic_bookmarks_history_holo_dark" />
-</com.aozora.browser.NavigationBarTablet>
+</com.android.browser.NavigationBarTablet>
